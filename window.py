@@ -82,9 +82,12 @@ class WindowDraw:
     def save_arrays(self, base_name: str = "drawing", target_size: int = 28):
         file_name = f"{base_name}_{target_size}x{target_size}"
         
-        output_folder = Path("drawings")
-        output_folder.mkdir(parents=True, exist_ok=True)
-        full_file_path = output_folder / file_name
+        drawings_output_folder = Path("drawings")
+        drawings_output_folder.mkdir(parents=True, exist_ok=True)
+        csv_output_folder = Path("csvs")
+        csv_output_folder.mkdir(parents=True, exist_ok=True)
+        drawing_full_file_path = drawings_output_folder / file_name
+        csv_full_file_path = csv_output_folder / file_name
         
         # Make a target_size x target_size version, INTER_AREA is the default; you can use INTER_NEAREST if you want more blocky pixels.
         resized = cv2.resize(self.canvas, (target_size, target_size), interpolation=cv2.INTER_AREA)
@@ -93,10 +96,10 @@ class WindowDraw:
         # np.save(f"{file_name}.npy", resized)  # uint8
         
         # Additionally, save the data as .csv
-        # self.save_csv(resized, f"{file_name}.csv")
+        self.save_csv(resized, f"{csv_full_file_path}.csv")
 
         # Save a PNG preview at the target size
-        cv2.imwrite(f"{full_file_path}.png", resized)
+        cv2.imwrite(f"{drawing_full_file_path}.png", resized)
 
         print("Stats (uint8):", resized.shape, resized.min(), resized.max())
 
