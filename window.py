@@ -113,6 +113,6 @@ class WindowDraw:
             root.destroy()
 
 if __name__ == "__main__":
-    window = WindowDraw(brush_size=4)
+    window = WindowDraw(width_height=128, brush_size=8)
     window.display_window()
     print(window.canvas)
