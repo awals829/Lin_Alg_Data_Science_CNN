@@ -47,7 +47,7 @@ class WindowDraw:
 
     def reset_canvas(self):
         self.canvas = np.full((self.height, self.width), self.screen_colour ,dtype=np.uint8)
-    
+
     def on_mouse(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN or event == cv2.EVENT_RBUTTONDOWN:
             self.drawing = True
@@ -66,19 +66,12 @@ class WindowDraw:
             self.erase_active = False
             self.last_pt = None
 
-    # def on_trackbar(self, val):
-    #     # Keep within limits
-    #     v = max(self.min_brush_size, min(self.max_brush_size, val))
-    #     v = v if v % 2 == 1 else v + 1
-    #     cv2.setTrackbarPos("Brush", self.window_name, v)
-    #     self.brush_size = v
-        
     def save_csv (self, arr: np.ndarray, filename : str):
         with open(filename, 'w', newline='') as f:
             writer = csv.writer(f)
             for row in arr:
                 writer.writerow(row.tolist())
-        
+
     def save_arrays(self, base_name: str = "drawing", target_size: int = 28):
         file_name = f"{base_name}_{target_size}x{target_size}"
         
