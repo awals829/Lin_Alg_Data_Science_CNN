@@ -3,8 +3,6 @@ Importing Libraries and Defining Transformations for MNIST Dataset
 """
 import torch, torchvision
 from torchvision import transforms
-from pathlib import Path
-from tqdm import tqdm
 
 """
 Setting Up Computation Device
