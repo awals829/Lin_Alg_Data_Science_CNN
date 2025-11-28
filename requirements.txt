@@ -2,4 +2,3 @@ torch
 torchvision
 numpy
 pathlib
-tqdm
