@@ -75,7 +75,7 @@ class WindowDraw:
     def save_arrays(self, base_name: str = "drawing", target_size: int = 28):
         file_name = f"{base_name}_{target_size}x{target_size}"
         
-        drawings_output_folder = Path("drawings")
+        drawings_output_folder = Path("customFigures/original")
         drawings_output_folder.mkdir(parents=True, exist_ok=True)
         csv_output_folder = Path("csvs")
         csv_output_folder.mkdir(parents=True, exist_ok=True)
