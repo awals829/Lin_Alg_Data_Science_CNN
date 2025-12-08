@@ -26,7 +26,7 @@ test_dataset = torchvision.datasets.MNIST(
 
 test_loader = torch.utils.data.DataLoader(
                                         test_dataset,
-                                        batch_size=128,
+                                        batch_size=1000,
                                         shuffle=False
                                         )
 

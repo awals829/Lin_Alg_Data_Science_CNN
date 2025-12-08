@@ -42,8 +42,6 @@ class WindowDraw:
                 name = self._prompt_filename_dialog()
                 if name:
                     self.save_arrays(name, target_size=28)
-                    cv2.destroyAllWindows()
-                    break
 
     def reset_canvas(self):
         self.canvas = np.full((self.height, self.width), self.screen_colour ,dtype=np.uint8)

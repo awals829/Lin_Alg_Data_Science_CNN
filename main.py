@@ -32,8 +32,15 @@ Defining Transformation Pipeline for MNIST Dataset
 This pipeline converts images to tensors and normalizes them using the defined mean and standard deviation.
 """
 transformer = transforms.Compose([
+    # Data augmentation in pixel space (on PIL images)
+    transforms.RandomAffine(
+        degrees=15,               # small rotations
+        translate=(0.1, 0.1),     # up to 10% shift in x/y
+        scale=(0.9, 1.1),         # small zoom in/out
+        shear=10,                 # mild shear (skew)
+        fill=0                    # keep background black
+    ),
     transforms.ToTensor(),
-    
     transforms.Normalize(mean=MNIST_MEAN, std=MNIST_STD)
 ])
 
@@ -48,7 +55,7 @@ train_dataset = torchvision.datasets.MNIST(root="./data",
                                            download=True, 
                                            transform=transformer)
 
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=128, shuffle=True)
 
 
 # --- Instantiate model, loss, optimizer ---
@@ -56,7 +63,7 @@ model = SimpleCNN().to(device)               # move model to GPU or CPU
 criterion = nn.CrossEntropyLoss()            # good for classification
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-num_epochs = 10
+num_epochs = 5
 
 model.train()
 for epoch in range(num_epochs):
