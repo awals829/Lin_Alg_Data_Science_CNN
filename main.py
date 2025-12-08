@@ -110,7 +110,9 @@ def train(num_epochs: int = 15) -> None:
 
     print("Finished training run.")
 
-
+"""
+Adjust model name here to save a different model
+"""
 def save_model(path: Path = Path("models/simple_cnn_mnist.pth")) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(model.state_dict(), path)

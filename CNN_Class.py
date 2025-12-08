@@ -10,7 +10,7 @@ class SimpleCNN(nn.Module):
     A small CNN for MNIST:
     - Input: (N, 1, 28, 28)
     - 2 conv layers + max pool
-    - 2 fully connected layers to 10 logits (digits 0–9)
+    - 2 fully connected layers to 10 logits (digits 0-9)
     """
     def __init__(self):
         super().__init__()
