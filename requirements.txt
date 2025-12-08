@@ -2,4 +2,4 @@ torch
 torchvision
 numpy
 pathlib
-matplotlib
+opencv-python

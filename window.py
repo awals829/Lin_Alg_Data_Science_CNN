@@ -42,8 +42,6 @@ class WindowDraw:
                 name = self._prompt_filename_dialog()
                 if name:
                     self.save_arrays(name, target_size=28)
-                    cv2.destroyAllWindows()
-                    break
 
     def reset_canvas(self):
         self.canvas = np.full((self.height, self.width), self.screen_colour ,dtype=np.uint8)
@@ -75,7 +73,7 @@ class WindowDraw:
     def save_arrays(self, base_name: str = "drawing", target_size: int = 28):
         file_name = f"{base_name}_{target_size}x{target_size}"
         
-        drawings_output_folder = Path("drawings")
+        drawings_output_folder = Path("customFigures/original")
         drawings_output_folder.mkdir(parents=True, exist_ok=True)
         csv_output_folder = Path("csvs")
         csv_output_folder.mkdir(parents=True, exist_ok=True)
@@ -106,6 +104,6 @@ class WindowDraw:
             root.destroy()
 
 if __name__ == "__main__":
-    window = WindowDraw(width_height=128, brush_size=8)
+    window = WindowDraw(width_height=128, brush_size=4)
     window.display_window()
     print(window.canvas)
