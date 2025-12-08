@@ -55,7 +55,39 @@ train_dataset = torchvision.datasets.MNIST(root="./data",
                                            download=True, 
                                            transform=transformer)
 
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=128, shuffle=True)
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
+
+
+"""
+For the Write-Up portion we can use this.
+"""
+choice = 2
+img, label = train_dataset[choice]
+print(train_dataset[choice])
+print(type(train_dataset))
+print(len(train_dataset))
+print(type(label), label)
+print(type(img), img.shape)
+# print(img)
+print(train_dataset.data[choice])
+print(train_dataset.targets[choice].item())
+
+# Visualize raw vs transformed (after undoing normalization)
+plt.subplot(1, 2, 1)
+plt.imshow(train_dataset.data[choice].numpy(), cmap="gray")
+plt.title(f"Raw (label {train_dataset.targets[choice].item()})")
+plt.axis("off")
+
+# Undo normalization just for plotting
+img_unnorm = img * MNIST_STD + MNIST_MEAN
+
+plt.subplot(1, 2, 2)
+plt.imshow(img_unnorm.squeeze().numpy(), cmap="gray")
+plt.title("Transformed (unnormalized view)")
+plt.axis("off")
+
+plt.tight_layout()
+plt.show()
 
 
 # --- Instantiate model, loss, optimizer ---
@@ -63,7 +95,7 @@ model = SimpleCNN().to(device)               # move model to GPU or CPU
 criterion = nn.CrossEntropyLoss()            # good for classification
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-num_epochs = 5
+num_epochs = 15
 
 model.train()
 for epoch in range(num_epochs):
@@ -106,34 +138,3 @@ save_path = save_dir / "simple_cnn_mnist.pth"
 
 torch.save(model.state_dict(), save_path)
 print(f"Saved model state_dict to: {save_path}")
-
-"""
-For the Write-Up portion we can use this.
-"""
-# choice = 50
-# img, label = train_dataset[choice]
-# print(train_dataset[choice])
-# print(type(train_dataset))
-# print(len(train_dataset))
-# print(type(label), label)
-# print(type(img), img.shape)
-# # print(img)
-# print(train_dataset.data[choice])
-# print(train_dataset.targets[choice].item())
-
-# # Visualize raw vs transformed (after undoing normalization)
-# plt.subplot(1, 2, 1)
-# plt.imshow(train_dataset.data[choice].numpy(), cmap="gray")
-# plt.title(f"Raw (label {train_dataset.targets[choice].item()})")
-# plt.axis("off")
-
-# # Undo normalization just for plotting
-# img_unnorm = img * MNIST_STD + MNIST_MEAN
-
-# plt.subplot(1, 2, 2)
-# plt.imshow(img_unnorm.squeeze().numpy(), cmap="gray")
-# plt.title("Transformed (unnormalized view)")
-# plt.axis("off")
-
-# plt.tight_layout()
-# plt.show()
