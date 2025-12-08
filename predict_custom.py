@@ -1,6 +1,6 @@
 # predict_custom.py
 """
-Predict the digit in a custom drawn 28x28 PNG using a trained SimpleCNN.
+Predict the digit in a custom drawn 28x28 PNG using a trained SimpleCNN on SVD transformed images.
 
 Also provides utility functions:
 - load_model()
@@ -17,7 +17,7 @@ from torchvision import transforms
 from PIL import Image
 
 from CNN_Class import SimpleCNN, MNIST_MEAN, MNIST_STD, get_device
-
+from svd_transform import SVDThresholdTransform
 
 device = get_device()
 print("Device:", device)
@@ -73,9 +73,17 @@ def center_digit(t: torch.Tensor) -> torch.Tensor:
 
 
 # Transform for custom images saved by window.py
-custom_transform = transforms.Compose([
+regular_transform = transforms.Compose([
     transforms.ToTensor(),                      # [1, 28, 28], in [0,1]
     transforms.Lambda(center_digit),            # center & scale digit
+    transforms.Normalize((MNIST_MEAN,), (MNIST_STD,)),
+])
+
+# Transform for custom images saved by window.py
+svd_transform = transforms.Compose([
+    transforms.ToTensor(),                      # [1, 28, 28], in [0,1]
+    transforms.Lambda(center_digit),            # center & scale digit
+    SVDThresholdTransform(5, 0.05),
     transforms.Normalize((MNIST_MEAN,), (MNIST_STD,)),
 ])
 
@@ -97,7 +105,7 @@ def predict_image_path(
     img = Image.open(img_path)
 
     # preprocess
-    input_tensor = custom_transform(img)        # [1, 28, 28]
+    input_tensor = svd_transform(img)        # [1, 28, 28]
     input_tensor = input_tensor.unsqueeze(0)    # [1, 1, 28, 28]
     input_tensor = input_tensor.to(device)
 
