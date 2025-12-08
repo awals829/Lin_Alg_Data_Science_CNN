@@ -1,0 +1,243 @@
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,enumerate,nicefrac,fancyhdr,hyperref,graphicx,adjustbox}
+\usepackage{marginnote}
+\hypersetup{colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue}
+\usepackage[left=2.6cm, right=2.6cm, top=1.5cm, includehead, includefoot]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[d]{esvect}
+\usepackage{tikz}
+
+%% commands
+%% useful macros [add to them as needed]
+% sets
+\newcommand{\C}{{\mathbb{C}}} 
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\Q}{{\mathbb{Q}}}
+\newcommand{\R}{{\mathbb{R}}}
+\newcommand{\Z}{{\mathbb{Z}}}
+\newcommand{\F}{{\mathbb{F}}}
+
+% bases
+\newcommand{\mA}{\mathcal{A}}
+\newcommand{\mB}{\mathcal{B}}
+\newcommand{\mC}{\mathcal{C}}
+\newcommand{\mD}{\mathcal{D}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mL}{\mathcal{L}}
+\newcommand{\mM}{\mathcal{M}}
+\newcommand{\mO}{\mathcal{O}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mS}{\mathcal{S}}
+\newcommand{\mT}{\mathcal{T}}
+
+% linear algebra
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\spn}{\operatorname{Span}}
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\prp}{\operatorname{perp}}
+\newcommand{\refl}{\operatorname{refl}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\nul}{\operatorname{Null}}
+\newcommand{\nully}{\operatorname{nullity}}
+\newcommand{\range}{\operatorname{Range}}
+\renewcommand{\ker}{\operatorname{Ker}}
+\newcommand{\col}{\operatorname{Col}}
+\newcommand{\row}{\operatorname{Row}}
+\newcommand{\cof}{\operatorname{cof}}
+\newcommand{\Num}{\operatorname{Num}}
+\newcommand{\Id}{\operatorname{Id}}
+\newcommand{\ipb}{\langle \thinspace, \rangle}
+\newcommand{\ip}[2]{\left\langle #1, #2\right\rangle} % inner products
+\newcommand{\M}[2]{M_{#1\times #2}(\F)}
+\newcommand{\RREF}{\operatorname{RREF}}
+\newcommand{\cv}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newenvironment{amatrix}[1]{\left[\begin{array}{@{}*{\numexpr#1-1}{c}|c@{}}}{\end{array}\right]}
+\newcommand{\am}[2]{\begin{amatrix}{#1} #2 \end{amatrix}}
+
+% vectors
+\newcommand{\vzero}{\vv{0}}
+\newcommand{\va}{\vv{a}}
+\newcommand{\vb}{\vv{b}}
+\newcommand{\vc}{\vv{c}}
+\newcommand{\vd}{\vv{d}}
+\newcommand{\ve}{\vv{e}}
+\newcommand{\vf}{\vv{f}}
+\newcommand{\vg}{\vv{g}}
+\newcommand{\vh}{\vv{h}}
+\newcommand{\vl}{\vv{\ell}}
+\newcommand{\vm}{\vv{m}}
+\newcommand{\vn}{\vv{n}}
+\newcommand{\vp}{\vv{p}}
+\newcommand{\vq}{\vv{q}}
+\newcommand{\vr}{\vv{r}}
+\newcommand{\vs}{\vv{s}}
+\newcommand{\vt}{\vv{t}}
+\newcommand{\vu}{\vv{u}}
+\newcommand{\vvv}{{\vv{v}}}
+\newcommand{\vw}{\vv{w}}
+\newcommand{\vx}{\vv{x}}
+\newcommand{\vy}{\vv{y}}
+\newcommand{\vz}{\vv{z}}
+
+% display
+\newcommand{\ds}{\displaystyle}
+\newcommand{\qand}{\quad\text{and}}
+\newcommand{\qandq}{\quad\text{and}\quad}
+\newcommand{\hint}{\textbf{Hint: }}
+
+% misc
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\rc}{\red{\checkmark}}
+
+\newcommand{\then}{%
+  \reversemarginpar\marginnote{\makebox[0pt][l]{\hspace{5.6em}$\Longrightarrow$}}[0cm]%
+}
+
+\newcommand{\solution}{\noindent\textbf{Solution:}\quad\\}
+\newcommand{\counter}{\noindent\textbf{counterexample:}\quad\\}
+\newcommand{\set}[3]{\Bigl\{ #1 \in #2 \ \Big| \ #3 \Bigr\}}
+\newcommand{\note}[1]{%
+  \marginnote{\makebox[0pt][r]{\hspace{-5.7em}#1}}[0cm]%
+}
+\newcommand{\circledone}{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw=red,inner sep=1pt] (char) {1};}}
+
+%% header (placeholders will be replaced by the script)
+\pagestyle{fancy}
+\fancyhead[L]{\bf\large Final Project} 
+\fancyhead[R]{\bf\large MATH 2303}
+\fancyfoot[C]{Page \thepage\ of 4}
+\setlength{\headheight}{35pt}
+
+\begin{document}
+	\begin{titlepage}
+	    \centering
+	    \vspace*{1cm} % Adjust the vertical space as needed
+	
+	    {\Large\bfseries SVD-Based Compression and CNN \\ Classification of Handwritten Digits\par}
+	    \vspace{1.5cm} % Space between title and author name
+	    {\large Amtoj Punia \par Andrew Walsh \par Evan Wushke \par}
+	    \vspace{1cm} % Space between author name and course
+	    {\large MATH 2303\par}
+	    \vspace{0.5cm} % Space before the date
+	    {\large December 9, 2025\par}
+	
+	    \vfill
+	
+	    \vfill % Push the following text to the bottom
+	    {\large Department of Mathematics and Computing\par}
+	    {\large Mount Royal University\par}
+	\end{titlepage}
+
+
+\section*{Abstract}
+This project studies the use of singular value decomposition for compressing handwritten digit images and examines how these low-rank representations affect the performance of a convolutional neural network. Each MNIST image is expressed as a matrix in \(\mathbb{R}^{28 \times 28}\) and replaced by a rank-\(k\) SVD approximation. A CNN is trained and tested exclusively on these truncated matrices. The work evaluates how reconstruction rank influences classification accuracy and how much discriminative structure remains after dimensional reduction. The results show that a small number of singular components capture the essential geometric features required for digit recognition.
+
+\section*{SVD-Based Compression and CNN Classification of Handwritten Digits}
+
+This paper investigates the interaction between linear algebraic compression techniques and modern learning models. Singular value decomposition provides a structured method for reducing the dimensionality of image data. By restricting MNIST digits to rank-\(k\) approximations, we examine how much information a convolutional neural network requires for effective classification. Both training and testing are performed on SVD-processed images. The objective is to analyze how accuracy changes as \(k\) varies and to identify the rank at which structural detail becomes insufficient.
+
+\subsection*{Singular Value Decomposition}
+For a matrix \(A \in \mathbb{R}^{m \times n}\), the singular value decomposition is
+\[
+A = U D V^{T},
+\]
+where \(U \in \mathbb{R}^{m \times m}\) and \(V \in \mathbb{R}^{n \times n}\) are orthogonal, and \(\Sigma\) is diagonal with singular values
+\[
+\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0.
+\]
+The integer \(r\) is the rank of \(A\). Each singular value measures the contribution of its associated singular vectors to the structure of the matrix. Larger values represent dominant geometric features, while smaller values represent finer detail.
+
+\subsection*{Rank-\(k\) Approximation}
+The truncated SVD is defined as
+\[
+A_k = U_k D_k V_k^{T},
+\]
+where \(U_k\), \(D_k\), and \(V_k\) contain the first \(k\) singular components. \(A_k\) is the optimal rank-\(k\) approximation with respect to the Frobenius norm. The reconstruction error is
+\[
+\mathrm{Err}(k) = \frac{\|A - A_k\|_{F}}{\|A\|_{F}},
+\]
+which quantifies the degree of information removed by the truncation.
+\pagebreak{}
+\subsection*{Data Processing}
+Each MNIST image is converted into a tensor of shape \((1,28,28)\). For each chosen rank \(k\), the SVD of the underlying matrix is computed, truncated, and reconstructed. The resulting matrix replaces the original image in the dataset.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{original_digit.png}
+    \caption*{Original Image}
+\end{minipage}
+\hfill
+\begin{minipage}{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{digit_rank5.png}
+    \caption*{Rank 5}
+\end{minipage}
+\hfill
+\begin{minipage}{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{digit_rank10.png}
+    \caption*{Rank 10}
+\end{minipage}
+\hfill
+\begin{minipage}{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{digit_rank14.png}
+    \caption*{Rank 14}
+\end{minipage}
+\end{figure}
+
+These examples illustrate the progressive removal of detail as \(k\) decreases and show how coarse structures dominate the low-rank representation.
+
+\subsection*{Convolutional Neural Network}
+A convolutional neural network is implemented with two convolution layers followed by a fully connected output layer for classification into 10 classes. ReLU activation is used throughout. Training uses the Adam optimizer with cross-entropy loss. Standard hyperparameters are applied: learning rate \(10^{-3}\), batch size 64, and training period of 10–15 epochs. The same architecture is trained independently for each value of \(k\).
+
+\subsection*{Experiments: Option A}
+Option A requires that all images used for training and testing undergo SVD truncation. Several ranks are selected, such as \(k = 5, 10, 14\). For each value of \(k\), the CNN is trained on the corresponding rank-\(k\) dataset and evaluated on a similarly processed test set. Metrics recorded include training accuracy, test accuracy, reconstruction error, and approximate compression ratio.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{svd_rank_results_table.png}
+\caption*{Placeholder: Accuracy and error statistics for selected \(k\).}
+\end{figure}
+
+\pagebreak{}
+\subsection*{Custom Digit Evaluation}
+Custom hand-drawn digits are included to test how the model generalizes to non-MNIST styles. These images are preprocessed to \(28 \times 28\) grayscale and subjected to the same SVD rank truncation before classification.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{custom_original.png}
+    \caption*{Custom Original}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{custom_rank10.png}
+    \caption*{Rank 10 Reconstruction}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{prediction_output.png}
+    \caption*{Model Prediction}
+\end{minipage}
+\end{figure}
+
+This evaluation shows how well the model preserves classification accuracy when the input data is restricted to low-rank SVD reconstructions.
+\subsection*{Results}
+The experiments show that small singular values contribute limited discriminative information for digit recognition. At low values of \(k\), accuracy decreases due to the loss of fine curvature and stroke detail. As \(k\) increases, performance improves and approaches that of models trained on full-rank images. The results confirm that the dominant singular components encode most of the geometric structure required for classification.
+
+\subsection*{Conclusion}
+Singular value decomposition provides a controlled framework for compressing image data while maintaining essential structure. Training a convolutional neural network on rank-\(k\) approximations reveals how much detail is necessary for accurate recognition. The findings indicate that moderate ranks preserve enough information for effective learning, while extreme compression limits performance. We can see that linear algebraic methods can guide the analysis of neural network behavior through structured data reduction.
+
+\end{document}
