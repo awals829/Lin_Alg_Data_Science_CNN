@@ -170,31 +170,32 @@ Each MNIST image is converted into a tensor of shape \((1,28,28)\). For each cho
 \centering
 \begin{minipage}{0.23\textwidth}
     \centering
-    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Original \\ Image \vspace{1cm}}}
+    \includegraphics[width=\textwidth]{original_digit.png}
     \caption*{Original Image}
 \end{minipage}
 \hfill
 \begin{minipage}{0.23\textwidth}
     \centering
-    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Rank 5 \vspace{1cm}}}
+    \includegraphics[width=\textwidth]{digit_rank5.png}
     \caption*{Rank 5}
 \end{minipage}
 \hfill
 \begin{minipage}{0.23\textwidth}
     \centering
-    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Rank 10 \vspace{1cm}}}
+    \includegraphics[width=\textwidth]{digit_rank10.png}
     \caption*{Rank 10}
 \end{minipage}
 \hfill
 \begin{minipage}{0.23\textwidth}
     \centering
-    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Rank 14 \vspace{1cm}}}
+    \includegraphics[width=\textwidth]{digit_rank14.png}
     \caption*{Rank 14}
 \end{minipage}
+
 \end{figure}
 
-These examples illustrate the progressive removal of detail as \(k\) decreases and show how coarse structures dominate the low-rank representation.
-
+These examples show how detail diminishes as 
+$k$ decreases and how the remaining low-rank structure is dominated by coarse, large-scale features.
 \subsection*{Neural Network Mathematics}
 A standard neural network layer transforms an input vector $\vx \in \R^n$ into an output vector $\vy \in \R^m$ through a linear operation followed by a non-linear activation function. The linear component is an affine transformation computed as:
 \[
