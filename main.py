@@ -89,7 +89,6 @@ plt.axis("off")
 plt.tight_layout()
 plt.show()
 
-
 # --- Instantiate model, loss, optimizer ---
 model = SimpleCNN().to(device)               # move model to GPU or CPU
 criterion = nn.CrossEntropyLoss()            # good for classification
