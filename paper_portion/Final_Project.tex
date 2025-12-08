@@ -1,4 +1,3 @@
-
 \documentclass[11pt]{article}
 \usepackage{amsmath,amssymb,amsthm,enumerate,nicefrac,fancyhdr,hyperref,graphicx,adjustbox}
 \usepackage{marginnote}
@@ -115,24 +114,24 @@
 \setlength{\headheight}{35pt}
 
 \begin{document}
-	\begin{titlepage}
-	    \centering
-	    \vspace*{1cm} % Adjust the vertical space as needed
-	
-	    {\Large\bfseries SVD-Based Compression and CNN \\ Classification of Handwritten Digits\par}
-	    \vspace{1.5cm} % Space between title and author name
-	    {\large Amtoj Punia \par Andrew Walsh \par Evan Wushke \par}
-	    \vspace{1cm} % Space between author name and course
-	    {\large MATH 2303\par}
-	    \vspace{0.5cm} % Space before the date
-	    {\large December 9, 2025\par}
-	
-	    \vfill
-	
-	    \vfill % Push the following text to the bottom
-	    {\large Department of Mathematics and Computing\par}
-	    {\large Mount Royal University\par}
-	\end{titlepage}
+    \begin{titlepage}
+        \centering
+        \vspace*{1cm} % Adjust the vertical space as needed
+    
+        {\Large\bfseries SVD-Based Compression and CNN \\ Classification of Handwritten Digits\par}
+        \vspace{1.5cm} % Space between title and author name
+        {\large Amtoj Punia \par Andrew Walsh \par Evan Wushke \par}
+        \vspace{1cm} % Space between author name and course
+        {\large MATH 2303\par}
+        \vspace{0.5cm} % Space before the date
+        {\large December 9, 2025\par}
+    
+        \vfill
+    
+        \vfill % Push the following text to the bottom
+        {\large Department of Mathematics and Computing\par}
+        {\large Mount Royal University\par}
+    \end{titlepage}
 
 
 \section*{Abstract}
@@ -147,7 +146,7 @@ For a matrix \(A \in \mathbb{R}^{m \times n}\), the singular value decomposition
 \[
 A = U D V^{T},
 \]
-where \(U \in \mathbb{R}^{m \times m}\) and \(V \in \mathbb{R}^{n \times n}\) are orthogonal, and \(\Sigma\) is diagonal with singular values
+where \(U \in \mathbb{R}^{m \times m}\) and \(V \in \mathbb{R}^{n \times n}\) are orthogonal, and $D$  is diagonal with singular values
 \[
 \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0.
 \]
@@ -171,30 +170,47 @@ Each MNIST image is converted into a tensor of shape \((1,28,28)\). For each cho
 \centering
 \begin{minipage}{0.23\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{original_digit.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Original \\ Image \vspace{1cm}}}
     \caption*{Original Image}
 \end{minipage}
 \hfill
 \begin{minipage}{0.23\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{digit_rank5.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Rank 5 \vspace{1cm}}}
     \caption*{Rank 5}
 \end{minipage}
 \hfill
 \begin{minipage}{0.23\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{digit_rank10.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Rank 10 \vspace{1cm}}}
     \caption*{Rank 10}
 \end{minipage}
 \hfill
 \begin{minipage}{0.23\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{digit_rank14.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1cm} Rank 14 \vspace{1cm}}}
     \caption*{Rank 14}
 \end{minipage}
 \end{figure}
 
 These examples illustrate the progressive removal of detail as \(k\) decreases and show how coarse structures dominate the low-rank representation.
+
+\subsection*{Neural Network Mathematics}
+A standard neural network layer transforms an input vector $\vx \in \R^n$ into an output vector $\vy \in \R^m$ through a linear operation followed by a non-linear activation function. The linear component is an affine transformation computed as:
+\[
+\vz = W\vx + \vb,
+\]
+where $W \in \R^{m \times n}$ is the weight matrix and $\vb \in \R^m$ is the bias vector. This corresponds to the matrix-vector multiplication fundamental to linear algebra.
+
+To enable the network to learn complex patterns, a non-linear activation function is applied element-wise to $\vz$. This project utilizes the Rectified Linear Unit (ReLU), defined as:
+\[
+\text{ReLU}(z) = \max(0, z) =
+\begin{cases}
+z & \text{if } z > 0, \\
+0 & \text{if } z \le 0.
+\end{cases}
+\]
+The ReLU function introduces non-linearity while remaining computationally efficient. It also promotes sparsity within the network, as neurons with negative pre-activation values output zero.
 
 \subsection*{Convolutional Neural Network}
 A convolutional neural network is implemented with two convolution layers followed by a fully connected output layer for classification into 10 classes. ReLU activation is used throughout. Training uses the Adam optimizer with cross-entropy loss. Standard hyperparameters are applied: learning rate \(10^{-3}\), batch size 64, and training period of 10–15 epochs. The same architecture is trained independently for each value of \(k\).
@@ -204,7 +220,7 @@ Option A requires that all images used for training and testing undergo SVD trun
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.3\textwidth]{svd_rank_results_table.png}
+\framebox{\parbox{0.3\textwidth}{\centering \vspace{2cm} Results Table \vspace{2cm}}}
 \caption*{Placeholder: Accuracy and error statistics for selected \(k\).}
 \end{figure}
 
@@ -216,19 +232,19 @@ Custom hand-drawn digits are included to test how the model generalizes to non-M
 \centering
 \begin{minipage}{0.3\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{custom_original.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1.5cm} Custom \\ Original \vspace{1.5cm}}}
     \caption*{Custom Original}
 \end{minipage}
 \hfill
 \begin{minipage}{0.3\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{custom_rank10.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1.5cm} Rank 10 \vspace{1.5cm}}}
     \caption*{Rank 10 Reconstruction}
 \end{minipage}
 \hfill
 \begin{minipage}{0.3\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{prediction_output.png}
+    \framebox{\parbox{0.9\textwidth}{\centering \vspace{1.5cm} Model \\ Prediction \vspace{1.5cm}}}
     \caption*{Model Prediction}
 \end{minipage}
 \end{figure}
