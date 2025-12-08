@@ -52,7 +52,7 @@ transform = transforms.Compose([
     transforms.Normalize((MNIST_MEAN,), (MNIST_STD,)),
 ])
 
-choice = "1"
+choice = "4"
 drawings_original = f"customFigures/original/{choice}_28x28.png"
 #drawings_svd = "customFigures/SVDConv/1_28x28.png"
 
