@@ -9,7 +9,7 @@ End-to-end runner:
 from pathlib import Path
 
 from window import WindowDraw
-from predict_custom import load_model, predict_image_path
+from predict_custom import load_regular_model, load_svd_model, predict_image_path
 
 
 def main():
@@ -25,15 +25,25 @@ def main():
     img_path: Path = window.last_saved_path
     print(f"Using last saved drawing: {img_path}")
 
-    # 3. Load model and run prediction
-    model = load_model()
-    pred_class, top_probs, top_idxs = predict_image_path(img_path, model)
+    # 3. Load regular model and run prediction
+    model_regular = load_regular_model()
+    pred_class_reg, top_probs_reg, top_idxs_reg = predict_image_path(img_path, model_regular)
 
-    print(f"Predicted digit: {pred_class}")
+    # 4. Load svd model and run prediction
+    model_svd = load_svd_model()
+    pred_class_svd , top_probs_svd , top_idxs_svd  = predict_image_path(img_path, model_svd)
+    
+    print(f"\nRegular MNIST CNN Model Prediction")
+    print(f"Predicted digit: {pred_class_reg}")
     print("Top-3 predictions:")
-    for p, idx in zip(top_probs, top_idxs):
+    for p, idx in zip(top_probs_reg, top_idxs_reg):
         print(f"  {idx.item()}: {p.item():.4f}")
-
+    
+    print(f"\nSVD MNIST CNN Model Prediction")
+    print(f"Predicted digit: {pred_class_svd}")
+    print("Top-3 predictions:")
+    for p, idx in zip(top_probs_svd, top_idxs_svd):
+        print(f"  {idx.item()}: {p.item():.4f}")
 
 if __name__ == "__main__":
     main()

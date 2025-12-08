@@ -11,13 +11,12 @@ from torchvision import transforms
 
 from CNN_Class import SimpleCNN, MNIST_MEAN, MNIST_STD, get_device
 
-
 device = get_device()
 print("Device:", device)
 
 # --- Load model ---
 model = SimpleCNN().to(device)
-state_path = Path("models/simple_cnn_mnist.pth")
+state_path = Path("models/svd_simple_cnn_mnist.pth")
 state_dict = torch.load(state_path, map_location=device)
 model.load_state_dict(state_dict)
 model.eval()

@@ -3,7 +3,8 @@
 Predict the digit in a custom drawn 28x28 PNG using a trained SimpleCNN on SVD transformed images.
 
 Also provides utility functions:
-- load_model()
+- load_regular_model()
+- load_svd_model()
 - center_digit()
 - predict_image_path()
 """
@@ -23,7 +24,7 @@ device = get_device()
 print("Device:", device)
 
 
-def load_model(
+def load_regular_model(
     weights_path: Path = Path("models/simple_cnn_mnist.pth"),
 ) -> nn.Module:
     """Load SimpleCNN with trained weights, moved to the correct device."""
@@ -34,6 +35,16 @@ def load_model(
     print(f"Loaded model from: {weights_path}")
     return model
 
+def load_svd_model(
+    weights_path: Path = Path("models/svd_simple_cnn_mnist.pth"),
+) -> nn.Module:
+    """Load SimpleCNN with trained weights, moved to the correct device."""
+    model = SimpleCNN().to(device)
+    state_dict = torch.load(weights_path, map_location=device)
+    model.load_state_dict(state_dict)
+    model.eval()
+    print(f"Loaded model from: {weights_path}")
+    return model
 
 def center_digit(t: torch.Tensor) -> torch.Tensor:
     """
@@ -124,9 +135,11 @@ if __name__ == "__main__":
     img_path = Path(f"customFigures/original/{choice}_28x28.png")
     print(f"Predicting for: {img_path}")
 
-    model = load_model()
-    pred_class, top_probs, top_idxs = predict_image_path(img_path, model)
+    regular_model = load_regular_model()
+    model_svd = load_regular_model()
+    pred_class_reg, top_probs_reg, top_idxs_reg = predict_image_path(img_path, regular_model)
 
+    pred_class, top_probs, top_idxs = predict_image_path(img_path, regular_model)
     print(f"Predicted digit: {pred_class}")
     print("Top-3 predictions:")
     for p, idx in zip(top_probs, top_idxs):
