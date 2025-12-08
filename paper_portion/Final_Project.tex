@@ -216,6 +216,34 @@ The ReLU function introduces non-linearity while remaining computationally effic
 \subsection*{Convolutional Neural Network}
 A convolutional neural network is implemented with two convolution layers followed by a fully connected output layer for classification into 10 classes. ReLU activation is used throughout. Training uses the Adam optimizer with cross-entropy loss. Standard hyperparameters are applied: learning rate \(10^{-3}\), batch size 64, and training period of 10–15 epochs. The same architecture is trained independently for each value of \(k\).
 
+
+\subsubsection*{Loss Function}
+In this project, we utilize the standard PyTorch \texttt{CrossEntropyLoss} function with \texttt{reduction='mean'}. This function combines \texttt{LogSoftmax} and \texttt{NLLLoss} (Negative Log Likelihood Loss) in a single module. 
+
+Given a mini-batch of size \(N\), let \(x_i\) be the vector of normalized logits (initial scores the model applies before the activation functions)  for sample \(i\), and let \(c_i\) be the index of the true class for that sample. The mean cross-entropy loss \(L\) over the batch is calculated as:
+\[
+L = \frac{1}{N} \sum_{i=1}^{N} \left( - \log \left( \frac{\exp(x_{i, c_i})}{\sum_{j} \exp(x_{i, j})} \right) \right)
+\]
+Here, \(x_{i, c_i}\) represents the logit corresponding to the correct class for sample \(i\), and the denominator sums the exponentials of the logits across all classes. This formulation ensures numerical stability and provides an averaged loss value for optimization.
+
+\subsubsection*{Optimization Algorithm}
+To minimize the loss function, we use the Adam optimizer. At each timestep \(t\), for each parameter \(\theta\), Adam computes the exponential moving averages of the gradients (\(m_t\)) and the squared gradients (\(v_t\)):
+\begin{align*}
+m_t &= \beta_1 m_{t-1} + (1 - \beta_1) \nabla L_t(\theta_{t-1}) \\
+v_t &= \beta_2 v_{t-1} + (1 - \beta_2) (\nabla L_t(\theta_{t-1}))^2
+\end{align*}
+Since \(m_t\) and \(v_t\) are initialized as zero vectors, they are biased towards zero. We compute bias-corrected estimates:
+\[
+\hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\]
+The parameter update rule is then given by:
+\[
+\theta_t = \theta_{t-1} - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\]
+where \(\alpha\) is the learning rate and \(\epsilon\) is a small constant for numerical stability.
+
+
+
 \subsection*{Experiments: Option A}
 Option A requires that all images used for training and testing undergo SVD truncation. Several ranks are selected, such as \(k = 5, 10, 14\). For each value of \(k\), the CNN is trained on the corresponding rank-\(k\) dataset and evaluated on a similarly processed test set. Metrics recorded include training accuracy, test accuracy, reconstruction error, and approximate compression ratio.
 
