@@ -16,7 +16,7 @@ print("Device:", device)
 
 # --- Load model ---
 model = SimpleCNN().to(device)
-state_path = Path("models/svd_simple_cnn_mnist.pth")
+state_path = Path("models/k2_svd_simple_cnn_mnist.pth")
 state_dict = torch.load(state_path, map_location=device)
 model.load_state_dict(state_dict)
 model.eval()

@@ -42,7 +42,7 @@ svd_transformer = transforms.Compose([
         fill=0                    # keep background black
     ),
     transforms.ToTensor(),
-    SVDThresholdTransform(5, 0.05),
+    SVDThresholdTransform(2, 0.05),
     transforms.Normalize(mean=MNIST_MEAN, std=MNIST_STD)
 ])
 
@@ -136,7 +136,7 @@ print("Finished training run.")
 # --- Save model weights ---
 save_dir = Path("models")
 save_dir.mkdir(parents=True, exist_ok=True)
-save_path = save_dir / "svd_simple_cnn_mnist.pth"
+save_path = save_dir / "k2_svd_simple_cnn_mnist.pth"
 
 torch.save(model.state_dict(), save_path)
 print(f"Saved model state_dict to: {save_path}")

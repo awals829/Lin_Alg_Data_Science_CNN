@@ -37,13 +37,13 @@ def main():
     print(f"Predicted digit: {pred_class_reg}")
     print("Top-3 predictions:")
     for p, idx in zip(top_probs_reg, top_idxs_reg):
-        print(f"  {idx.item()}: {p.item():.4f}")
+        print(f"  {idx.item()}: {p.item():.8f}")
     
     print(f"\nSVD MNIST CNN Model Prediction")
     print(f"Predicted digit: {pred_class_svd}")
     print("Top-3 predictions:")
     for p, idx in zip(top_probs_svd, top_idxs_svd):
-        print(f"  {idx.item()}: {p.item():.4f}")
+        print(f"  {idx.item()}: {p.item():.8f}")
 
 if __name__ == "__main__":
     main()
