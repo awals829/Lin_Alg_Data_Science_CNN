@@ -1,2 +1,6 @@
 data/*
 mnist_by_class/*
+./venv
+.venv/
+__pycache__/
+*.pyc

@@ -7,7 +7,6 @@ End-to-end runner:
 """
 
 from pathlib import Path
-
 from window import WindowDraw
 from predict_custom import load_regular_model, load_svd_model, predict_image_path
 
